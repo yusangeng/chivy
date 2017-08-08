@@ -1,6 +1,7 @@
 /**
  * 入口文件
- * @author 
+ *
+ * @author yusangeng
  */
 
 import expo from './src'
