@@ -77,7 +77,7 @@ export default class LogContext {
    *
    * @static
    * @param {any} levelStr
-   * @returns
+   * @returns {Function} 日志打印函数
    * @memberof LogContext
    */
   static getLogByLevel (levelStr) {
