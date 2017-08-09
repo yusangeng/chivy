@@ -4,7 +4,7 @@
  * @author yusangeng
  *
  * @fileoverview
- * Logger生成日志, LogContext打印日志
+ * Logger生成日志, LogContext打印日志.
  */
 
 import dateFormat from 'dateformat'
@@ -49,19 +49,21 @@ const colorfulStyles = {
 }
 
 /**
- * 日志打印类
+ * 日志打印类.
  *
  * @export
  * @class LogContext
  */
 export default class LogContext {
   /**
-   * 转化level字符串(为了显示整齐)
+   * 转化level字符串(为了显示整齐).
    *
    * @static
    * @param {string} levelStr 日志级别字符串
    * @returns {string} 转化后的字符串
+   *
    * @memberof LogContext
+   * @private
    */
   static transLevel (levelStr) {
     return {
@@ -69,19 +71,21 @@ export default class LogContext {
       'INFO': 'INF',
       'WARN': 'WRN',
       'ERROR': 'ERR'
-    }[levelStr] || '#UKN'
+    }[levelStr] || '???'
   }
 
   /**
-   * 通过level字符串获取log打印函数
+   * 通过level字符串获取log打印函数.
    *
    * @static
-   * @param {any} levelStr
+   * @param {any} levelStr 日志级别
    * @returns {Function} 日志打印函数
+   *
    * @memberof LogContext
+   * @private
    */
   static getLogByLevel (levelStr) {
-    let log = console.log.bind(console)
+    let log = null
 
     if (levelStr === 'DEBUG') {
       log = console.debug.bind(console)
@@ -91,6 +95,8 @@ export default class LogContext {
       log = console.warn.bind(console)
     } else if (levelStr === 'ERROR') {
       log = console.error.bind(console)
+    } else {
+      log = console.log.bind(console)
     }
 
     return log
@@ -99,7 +105,12 @@ export default class LogContext {
   /**
    * Creates an instance of LogContext.
    *
-   * @param {Object} [styles=colorfulStyles]
+   * @param {Object} styles [styles=colorfulStyles] log样式
+   * @param {Function} styles.level level字段样式
+   * @param {Function} styles.module module字段样式
+   * @param {Function} styles.time time字段样式
+   * @param {Function} styles.content 日志内容样式(只对单行日志有效)
+   *
    * @memberof LogContext
    */
   constructor (styles = colorfulStyles) {
@@ -107,13 +118,14 @@ export default class LogContext {
   }
 
   /**
-   * 打印日志
+   * 打印日志.
    *
    * @param {number|string} level 日志级别
    * @param {string} moduleName 模块名
    * @param {Array} params 其他参数
    *
    * @memberof LogContext
+   * @instance
    */
   log (level, moduleName, ...params) {
     if (!noColor) {
@@ -125,13 +137,15 @@ export default class LogContext {
   }
 
   /**
-   * 彩色打印
+   * 彩色打印.
    *
    * @param {number|string} level 日志级别
    * @param {string} moduleName 模块名
    * @param {Array} params 其他参数
    *
    * @memberof LogContext
+   * @instance
+   * @private
    */
   colorfully (level, moduleName, ...params) {
     const levelStr = anything2LevelString(level) || ('' + level)
@@ -169,13 +183,15 @@ export default class LogContext {
   }
 
   /**
-   * 单色打印
+   * 单色打印.
    *
    * @param {number|string} level 日志级别
    * @param {string} moduleName 模块名
    * @param {Array} params 其他参数
    *
    * @memberof LogContext
+   * @instance
+   * @private
    */
   monochromatically (level, moduleName, ...params) {
     const levelStr = anything2LevelString(level) || ('' + level)

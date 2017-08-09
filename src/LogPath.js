@@ -7,12 +7,12 @@
 import isString from 'lodash/isString'
 
 /**
- * 路径封装类
+ * 路径封装类.
  *
  * 路径是指形如`a/b/c/d`的字符串, 其中`/`隔开的部分叫做分段, 分段可以为字符串、通配符`*`, 或者多分段通配符`**`
- * 注意, 在一个分段内, 不支持通配符和和其他字符混用
+ * 注意, 在一个分段内, 不支持通配符和和其他字符混用.
  *
- * 相当于简陋版的minimatch（https://github.com/isaacs/minimatch）
+ * 相当于简陋版的minimatch(https://github.com/isaacs/minimatch)
  *
  * @class LogPath
  * @private
@@ -31,6 +31,7 @@ export default class LogPath {
 
   /**
    * Creates an instance of LogPath.
+   *
    * @param {string | LogPath} str 路径字符串或其他路径对象, 不可为空字符串
    *
    * @memberof LogPath
@@ -71,7 +72,7 @@ export default class LogPath {
   /**
    * 是否匹配
    *
-   * `a/#/b`可以匹配`a/foobar/b`, `a/##/b`可以匹配`a/foobar/b`、`a/foo/bar/b`以及`a/b`, `##`可以匹配任意路径（#号实际为*号）
+   * `a/#/b`可以匹配`a/foobar/b`, `a/##/b`可以匹配`a/foobar/b`、`a/foo/bar/b`以及`a/b`, `##`可以匹配任意路径(#号实际为*号)
    *
    * @param {string | LogPath} other 路径字符串或其他路径对象, 不可包含通配符
    * @returns {boolean} 匹配返回true, 否则返回false

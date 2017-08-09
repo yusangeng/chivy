@@ -42,7 +42,7 @@ if (!g.chivylevel) {
 
 if (!g.chivy) {
   /**
-   * 在命令行打印日志（测试用）
+   * 在命令行打印日志(测试用)
    */
   g.chivy = function (...params) {
     const logger = new Logger()

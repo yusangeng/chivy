@@ -9,7 +9,7 @@ import { anything2Level } from './levelHelper'
 import LogPath from './LogPath'
 
 /**
- * 过滤日志
+ * 过滤日志.
  *
  * @param {number|string} level 日志级别
  * @param {string|Path} moduleName 模块名
@@ -20,7 +20,7 @@ export default function filter (level, moduleName) {
 }
 
 /**
- * 打开某个模块的日志
+ * 打开某个模块的日志.
  *
  * @param {string} moduleName 模块名
  */
@@ -33,7 +33,7 @@ filter.on = function on (moduleName) {
 }
 
 /**
- * 关闭某个模块的日志
+ * 关闭某个模块的日志.
  *
  * @param {string} moduleName 模块名
  */
@@ -43,7 +43,7 @@ filter.off = function off (moduleName) {
 }
 
 /**
- * 设置日志级别
+ * 设置日志级别.
  *
  * @param {number|string} value 级别数或者级别名字
  */
@@ -52,11 +52,11 @@ filter.setLevel = function setLevel (value) {
 }
 
 /**
- * 当前日志级别
+ * 当前日志级别.
  */
 filter.level_ = config['chivy-level']
 
 /**
- * 当前屏蔽的模块列表
+ * 当前屏蔽的模块列表.
  */
 filter.modules_ = config['chivy-modules'].map(el => new LogPath(el))

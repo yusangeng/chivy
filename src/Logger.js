@@ -31,7 +31,7 @@ export default class Logger {
   }
 
   /**
-   * 日志打印（debug级别）
+   * 日志打印(debug级别)
    *
    * @param {any} params 要打印的数据
    *
@@ -47,7 +47,7 @@ export default class Logger {
   }
 
   /**
-   * 日志打印（info级别）
+   * 日志打印(info级别)
    *
    * @param {any} params 要打印的数据
    *
@@ -63,7 +63,7 @@ export default class Logger {
   }
 
   /**
-   * 日志打印（warn级别）
+   * 日志打印(warn级别)
    *
    * @param {any} params 要打印的数据
    *
@@ -79,7 +79,7 @@ export default class Logger {
   }
 
   /**
-   * 日志打印（error级别）
+   * 日志打印(error级别)
    *
    * @param {any} params 要打印的数据
    *
@@ -108,10 +108,10 @@ export default class Logger {
 }
 
 /**
- * @property {string} globalModuleName 默认模块名（同时表示全局）
+ * @property {string} globalModuleName 默认模块名(同时表示全局)
  * @readonly
  */
-Logger.globalModuleName = 'global' /** 默认模块名（同时表示全局） */
+Logger.globalModuleName = 'global' /** 默认模块名(同时表示全局) */
 
 /**
  * @enum {number} Levels 日志级别
