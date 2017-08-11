@@ -4,10 +4,6 @@
  * @author yusangeng
  */
 
-import logFilter from './filter'
-import LogContext from './LogContext'
-import LogPath from './LogPath'
-
 /**
  * 日志类
  *
@@ -24,10 +20,11 @@ export default class Logger {
    *
    * @memberof Logger
    */
-  constructor (moduleName, context = new LogContext(), filter = logFilter) {
-    this.moduleName = new LogPath(moduleName || Logger.globalModuleName)
+  constructor (moduleName, context = new Logger.injector.LogContext(),
+    filter = Logger.injector.logFilter) {
+    this.moduleName = new Logger.injector.LogPath(moduleName || Logger.globalModuleName)
     this.ctx = context
-    this.filter = logFilter
+    this.filter = Logger.injector.logFilter
   }
 
   /**
