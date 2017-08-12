@@ -51,6 +51,8 @@ const colorfulStyles = {
 /**
  * 日志打印类.
  *
+ * 可以通过赋值Logger.injector.LogContext替换.
+ *
  * @export
  * @class LogContext
  */

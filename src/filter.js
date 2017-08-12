@@ -11,6 +11,8 @@ import LogPath from './LogPath'
 /**
  * 过滤日志.
  *
+ * 可以通过赋值Logger.injector.logFilter替换.
+ *
  * @param {number|string} level 日志级别
  * @param {string|Path} moduleName 模块名
  * @returns {boolean} 需要打印返回true, 否则返回false

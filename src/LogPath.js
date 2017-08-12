@@ -12,10 +12,12 @@ import isString from 'lodash/isString'
  * 路径是指形如`a/b/c/d`的字符串, 其中`/`隔开的部分叫做分段, 分段可以为字符串、通配符`*`, 或者多分段通配符`**`
  * 注意, 在一个分段内, 不支持通配符和和其他字符混用.
  *
- * 相当于简陋版的minimatch(https://github.com/isaacs/minimatch)
+ * 相当于简陋版的minimatch(https://github.com/isaacs/minimatch).
  *
+ * 可以通过赋值Logger.injector.LogPath替换.
+ *
+ * @export
  * @class LogPath
- * @private
  */
 export default class LogPath {
   /**
@@ -51,7 +53,9 @@ export default class LogPath {
    * 转化为字符串
    *
    * @returns {string} 转化结果
+   *
    * @memberof LogPath
+   * @instance
    */
   toString () {
     return this.sections.join('/')
@@ -64,6 +68,7 @@ export default class LogPath {
    * @returns {boolean} 相等返回true, 否则返回false
    *
    * @memberof LogPath
+   * @instance
    */
   equal (other) {
     return this.toString() === other.toString()
@@ -78,6 +83,7 @@ export default class LogPath {
    * @returns {boolean} 匹配返回true, 否则返回false
    *
    * @memberof LogPath
+   * @instance
    */
   match (other) {
     const otherPath = isString(other) ? new LogPath(other) : other
@@ -97,6 +103,7 @@ export default class LogPath {
  * @param {Array<string>} right
  * @returns {boolean} 匹配返回true, 否则返回false
  *
+ * @memberof LogPath
  * @private
  */
 function sectionListMatch (left, right) {
@@ -142,6 +149,7 @@ function sectionListMatch (left, right) {
  * @param {string} right
  * @returns {number} left匹配right返回0, nextLeft匹配right返回1, 不匹配返回-1
  *
+ * @memberof LogPath
  * @private
  */
 function sectionMatch (left, nextLeft, right) {
