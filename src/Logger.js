@@ -20,11 +20,8 @@ export default class Logger {
    *
    * @memberof Logger
    */
-  constructor (moduleName, context = new Logger.injector.LogContext(),
-    filter = Logger.injector.logFilter) {
-    this.moduleName = new Logger.injector.LogPath(moduleName || Logger.globalModuleName)
-    this.ctx = context
-    this.filter = Logger.injector.logFilter
+  constructor (moduleName, context, filter) {
+    Logger.injector.inject(this, moduleName, context, filter)
   }
 
   /**
@@ -125,4 +122,16 @@ Logger.Levels = {
   ERROR: 3,
   /** MUTE: 表示不打印任何日志 */
   MUTE: 4
+}
+
+/**
+ * @property {Object} 依赖注入器
+ * @static
+ */
+Logger.injector = {
+  inject (that, moduleName, context, filter) {
+    that.moduleName = new this.LogPath(moduleName || Logger.globalModuleName)
+    that.ctx = context || new this.LogContext()
+    that.filter = filter || this.logFilter
+  }
 }
