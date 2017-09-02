@@ -1,6 +1,6 @@
 {
   "name": "chivy",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A front-end log tool.",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
@@ -11,7 +11,7 @@
     "build-release": "node_modules/.bin/webpack --color --config ./webpack/release.js",
     "prebuild": "npm test",
     "build": "npm run build-debug && npm run build-release",
-    "transpile": "cd src && ../node_modules/.bin/babel ./* -d ../lib",
+    "transpile": "cd src && ../node_modules/.bin/babel ./* -d ../lib --source-maps inline",
     "doc": "node_modules/.bin/jsdoc -r ./src -d ./doc -R ./README.md -t ./node_modules/ink-docstrap/template",
     "prepublish": "npm test && npm run transpile && npm run doc"
   },
