@@ -9,8 +9,8 @@ import Logger from './Logger'
 import g from './g'
 
 // 可能网页内存在多个版本的chivy
-g.__chivyFilters = g.__chivyFilters || []
-g.__chivyFilters.concat([filter])
+const filters = g.__chivyFilters || (g.__chivyFilters = [])
+g.__chivyFilters = filters.concat([filter])
 
 // 全局命令, 用于在console中改变配置
 if (!g.chivyon) {
