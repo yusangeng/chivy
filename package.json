@@ -11,7 +11,7 @@
     "build-release": "node_modules/.bin/webpack --color --config ./webpack/release.js",
     "prebuild": "npm test",
     "build": "npm run build-debug && npm run build-release",
-    "transpile": "./node_modules/.bin/babel ./src -d ../lib --source-maps inline",
+    "transpile": "./node_modules/.bin/babel ./src -d ./lib --source-maps inline",
     "doc": "node_modules/.bin/jsdoc -r ./src -d ./doc -R ./README.md -t ./node_modules/ink-docstrap/template",
     "prepublish": "npm test && npm run transpile && npm run doc"
   },
