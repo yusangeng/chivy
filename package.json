@@ -19,7 +19,9 @@
     "type": "git",
     "url": "https://github.com/yusangeng/chivy.git"
   },
-  "keywords": ["log"],
+  "keywords": [
+    "log"
+  ],
   "author": {
     "name": "yusangeng",
     "email": "yusangeng@outlook.com"
