@@ -16,7 +16,7 @@ export default class Logger {
    *
    * @param {string} moduleName 模块名
    * @param {object} [context=new LogContext()] 日志打印对象, 需要实现log(level, moduleName, ...params)方法
-   * @param {Function} [filtler=logFilter] 日志过滤器, 如果使用了自定义filter, globalCommand将当前logger失效
+   * @param {Function} [filtler=logFilter] 日志过滤器, 如果使用了自定义filter, globalCommand将对当前logger失效
    *
    * @memberof Logger
    */
