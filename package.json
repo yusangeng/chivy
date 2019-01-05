@@ -1,7 +1,7 @@
 {
   "name": "chivy",
-  "version": "0.1.7",
-  "description": "A front-end log tool.",
+  "version": "0.1.8",
+  "description": "浏览器控制台打印工具.",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
@@ -20,7 +20,9 @@
     "url": "https://github.com/yusangeng/chivy.git"
   },
   "keywords": [
-    "log"
+    "log",
+    "console",
+    "console-log"
   ],
   "author": {
     "name": "yusangeng",
