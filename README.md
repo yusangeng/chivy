@@ -1,6 +1,6 @@
 # chivy | 浏览器控制台打印工具
 
-[![Build Status](https://travis-ci.org/yusangeng/chivy.svg?branch=master)](https://travis-ci.org/yusangeng/chivy) [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Npm Package Info](https://badge.fury.io/js/chivy.svg)](https://www.npmjs.com/package/chivy)
+[![TypeScript](https://img.shields.io/badge/lang-typescript-blue.svg)](https://www.tslang.cn/) [![Build Status](https://travis-ci.org/yusangeng/chivy.svg?branch=master)](https://travis-ci.org/yusangeng/chivy) [![Coverage Status](https://coveralls.io/repos/github/yusangeng/chivy/badge.svg?branch=master)](https://coveralls.io/github/yusangeng/chivy?branch=master) [![Npm Package Info](https://badge.fury.io/js/chivy.svg)](https://www.npmjs.com/package/chivy) [![Downloads](https://img.shields.io/npm/dw/chivy.svg?style=flat)](https://www.npmjs.com/package/chivy)
 
 ## 综述
 
@@ -10,25 +10,6 @@ chivy是一个轻量级浏览器控制台打印工具, 实现了按模块和按�
 
 ``` bash
 npm install chivy --save
-```
-
-### 网页引用
-
-index.js:
-``` html
-<!DOCTYPE html>
-<html>
-  <head>
-    <script src="path/to/chivy.js"></script>
-    <script src="./index.js"></script>
-  </head>
-</html>
-```
-
-index.js:
-``` js
-var logger = new Chivy('project/module')
-logger.info('some information.')
 ```
 
 ## 使用
@@ -75,7 +56,7 @@ window.__Konph = {
 ``` js
 import Logger from 'chivy'
 
-log = new Logger('project/module')
+const log = new Logger('project/module')
 
 log.debug('Debug message!')
 log.info('Info message!')
@@ -83,20 +64,84 @@ log.warn('Warn message!')
 log.error('Error message!')
 ```
 
-### 临时改变配置
+### 自定义
 
-#### 在浏览器console中改变
+Logger通过Context执行打印, Filter执行过滤. 通过依赖注入, 可以通过自定义Context和Filter的方式自定义chivy的行为.
 
-``` js
-chivyon('SOME-MODULE-NAME') // 打开模块
-chivyoff('SOME-MODULE-NAME') // 屏蔽模块
-chivylevel('ERROR') // 修改日志级别
+例如:
+
+``` typescript
+import Logger, { IContxt, IFilter } from 'chivy'
+
+class Context implements IContext {
+  // ...
+}
+
+class Filter implements IFilter {
+  // ...
+}
+
+Logger.injector.Context = Context
+Logger.injector.Filter = Filter
+
+const log = new Logger('foo/bar')
 ```
 
-### 在console中执行打印
+IContext:
 
-chivy在浏览器中提供了全局函数`chivy`用来执行日志打印, 测试用. 
+``` typescript
+/**
+ * 日志打印接口.
+ *
+ * @export
+ * @interface IContext
+ */
+export interface IContext {
+  /**
+   * 打印日志.
+   *
+   * @param {Level} level 日志级别
+   * @param {string} moduleName 模块名
+   * @param {Array} params 其他参数
+   *
+   * @memberof Context
+   * @instance
+   */
+  log(level: Level, moduleName: string, ...params: any[]): void;
+}
+```
+
+IFilter:
+
+``` typescript
+/**
+ * 日志过滤器接口.
+ *
+ * @export
+ * @interface IFilter
+ */
+export interface IFilter {
+  /**
+   * 过滤日志.
+   *
+   * 可以通过赋值Logger.injector.logFilter替换.
+   *
+   * @param {Level} level 日志级别
+   * @param {Path} moduleName 模块名
+   * @returns {boolean} 需要打印返回true, 否则返回false
+   */
+  exec(level: Level, moduleName: Path): boolean;
+}
+```
+
+其中Path是对使用"/"分隔的路径字符串的封装, 提供了equal, match和toString三个方法, 支持通配符. 如果外部需要使用, 可以通过如下代码引入:
 
 ``` js
-chivy('12345')
+import { IFilter, Path } from 'chivy'
+
+class Filter implements IFilter {
+  exec(level: Level, moduleName: Path): boolean {
+    return moduleName.match('foo/bar/**/Foobar')
+  }
+}
 ```

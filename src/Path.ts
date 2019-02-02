@@ -1,10 +1,13 @@
 /**
- * 路径封装类
+ * 路径封装类.
  *
- * @author yusangeng
+ * @author Y3G
  */
 
 import isString from 'lodash/isString'
+
+const wildcard = '*'
+const doubleWildcard = '**'
 
 /**
  * 路径封装类.
@@ -14,38 +17,41 @@ import isString from 'lodash/isString'
  *
  * 相当于简陋版的minimatch(https://github.com/isaacs/minimatch).
  *
- * 可以通过赋值Logger.injector.LogPath替换.
+ * 可以通过赋值Logger.injector.Path替换.
  *
  * @export
- * @class LogPath
+ * @class Path
  */
-export default class LogPath {
+export default class Path {
+  sections_: Array<string>
+  str: string = ''
+
   /**
    * 路径分段列表
    *
    * @readonly
    *
-   * @memberof LogPath
+   * @memberof Path
    */
   get sections () {
     return this.sections_.slice()
   }
 
   /**
-   * Creates an instance of LogPath.
+   * Creates an instance of Path.
    *
-   * @param {string | LogPath} str 路径字符串或其他路径对象, 不可为空字符串
+   * @param {string|Path} str 路径字符串或其他路径对象, 不可为空字符串
    *
-   * @memberof LogPath
+   * @memberof Path
    * @private
    */
-  constructor (str) {
-    const pathStr = (str || '').toString()
+  constructor (str: string) {
+    const pathStr = this.str = (str || '').toString()
 
     this.sections_ = pathStr.split(/\/+/).map(el => el.trim()).filter(el => el.length)
 
     if (!this.sections_.length) {
-      console.warn(`不建议使用空字符串("${pathStr}")构造LogPath实例.`)
+      console.warn(`不建议使用空字符串("${pathStr}")构造Path实例.`)
     }
   }
 
@@ -54,23 +60,23 @@ export default class LogPath {
    *
    * @returns {string} 转化结果
    *
-   * @memberof LogPath
+   * @memberof Path
    * @instance
    */
-  toString () {
-    return this.sections.join('/')
+  toString () : string {
+    return this.str
   }
 
   /**
    * 是否相等
    *
-   * @param {string | LogPath} other 路径字符串或其他路径对象
+   * @param {string | Path} other 路径字符串或其他路径对象
    * @returns {boolean} 相等返回true, 否则返回false
    *
-   * @memberof LogPath
+   * @memberof Path
    * @instance
    */
-  equal (other) {
+  equal (other: string | Path) : boolean {
     return this.toString() === other.toString()
   }
 
@@ -79,21 +85,27 @@ export default class LogPath {
    *
    * `a/#/b`可以匹配`a/foobar/b`, `a/##/b`可以匹配`a/foobar/b`、`a/foo/bar/b`以及`a/b`, `##`可以匹配任意路径(#号实际为*号)
    *
-   * @param {string | LogPath} other 路径字符串或其他路径对象, 不可包含通配符
+   * @param {string | Path} other 路径字符串或其他路径对象, 不可包含通配符
    * @returns {boolean} 匹配返回true, 否则返回false
    *
-   * @memberof LogPath
+   * @memberof Path
    * @instance
    */
-  match (other) {
-    const otherPath = isString(other) ? new LogPath(other) : other
+  match (other: string | Path) : boolean {
+    const otherPath = isString(other) ? new Path(other) : other
 
-    if (other.toString().indexOf(LogPath.wildcard) !== -1) {
+    if (other.toString().indexOf(wildcard) !== -1) {
       throw new Error('被匹配的路径不可包含通配符(*或**).')
     }
 
     return sectionListMatch(this.sections, otherPath.sections)
   }
+}
+
+enum SectionMatchResult {
+  NotMatch = -1,
+  Match = 0,
+  NextMatch = 1
 }
 
 /**
@@ -102,27 +114,24 @@ export default class LogPath {
  * @param {Array<string>} left
  * @param {Array<string>} right
  * @returns {boolean} 匹配返回true, 否则返回false
- *
- * @memberof LogPath
- * @private
  */
-function sectionListMatch (left, right) {
+function sectionListMatch (left: Array<string>, right: Array<string>) : boolean {
   while (left.length && right.length) {
-    const currentLeft = left.shift()
+    const currentLeft = left.shift() as string
     const nextLeft = left[0] // 如果数组里没元素则为undefined, sectionMatch会认为没有nextLeft可用
-    const currentRight = right.shift()
+    const currentRight = right.shift() as string
 
     const sectionResult = sectionMatch(currentLeft, nextLeft, currentRight)
 
-    if (sectionResult < 0) {
+    if (sectionResult === SectionMatchResult.NotMatch) {
       return false
-    } else if (sectionResult === 0) {
-      if (currentLeft === LogPath.doubleWildcard) {
+    } else if (sectionResult === SectionMatchResult.Match) {
+      if (currentLeft === doubleWildcard) {
         // 把通配符放回去
         left.unshift(currentLeft)
       }
-    } else if (sectionResult > 0) {
-      if (currentLeft !== LogPath.doubleWildcard) {
+    } else if (sectionResult === SectionMatchResult.NextMatch) {
+      if (currentLeft === doubleWildcard) {
         // 此时需要要把下一个元素取出来, 下次匹配的时候直接从下下个开始
         left.shift()
       }
@@ -133,7 +142,7 @@ function sectionListMatch (left, right) {
     return false
   }
 
-  if (left.length && left.filter(el => el !== LogPath.doubleWildcard).length) {
+  if (left.length && left.filter(el => el !== doubleWildcard).length) {
     // 如果left中剩下的不止有多段通配符, 则说明匹配失败
     return false
   }
@@ -141,39 +150,34 @@ function sectionListMatch (left, right) {
   return true
 }
 
+
 /**
  * 单个路径分段匹配算法
  *
  * @param {string} left
  * @param {string} nextLeft
  * @param {string} right
- * @returns {number} left匹配right返回0, nextLeft匹配right返回1, 不匹配返回-1
- *
- * @memberof LogPath
- * @private
+ * @returns {SectionMatchResult} left匹配right返回Match, nextLeft匹配right返回NextMatch, 不匹配返回NotMatch
  */
-function sectionMatch (left, nextLeft, right) {
-  if (left === LogPath.wildcard) {
+function sectionMatch (left: string, nextLeft: string, right: string) : SectionMatchResult {
+  if (left === wildcard) {
     // 通配符
-    return 0
+    return SectionMatchResult.Match
   }
 
-  if (left === LogPath.doubleWildcard) {
+  if (left === doubleWildcard) {
     // 多分段通配符
-    if (sectionMatch(nextLeft, null, right) === 0) {
+    if (sectionMatch(nextLeft, '', right) === SectionMatchResult.Match) {
       // **/x 或 **/* 或 **/**
-      return 1
+      return SectionMatchResult.NextMatch
     }
 
-    return 0
+    return SectionMatchResult.Match
   }
 
   if (left === right) {
-    return 0
+    return SectionMatchResult.Match
   }
 
-  return -1
+  return SectionMatchResult.NotMatch
 }
-
-LogPath.wildcard = '*'
-LogPath.doubleWildcard = '**'

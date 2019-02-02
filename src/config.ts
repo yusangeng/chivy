@@ -1,13 +1,20 @@
 /**
- * 日志配置
+ * 日志配置.
  *
- * @author yusangeng
+ * @author Y3G
  */
 
-import conf from 'konph'
+import konph from 'konph'
 import { anything2Level } from './levelHelper'
 
-export default conf({
+
+export type ChivyConfig = {
+  'chivy-level': number,
+  'chivy-modules': Array<string>,
+  'chivy-context-flags': Array<string>
+}
+
+export default konph({
   'chivy-level': {
     def: 'WARN',
     fit: anything2Level
@@ -15,11 +22,11 @@ export default conf({
 
   'chivy-modules': {
     def: ['**'],
-    fit: conf.helper.fit.array
+    fit: konph.helper.fit.array
   },
 
   'chivy-context-flags': {
     def: ['color', 'level', 'module'], // 'color', 'level', 'module', 'time'
-    fit: conf.helper.fit.array
+    fit: konph.helper.fit.array
   }
 })
