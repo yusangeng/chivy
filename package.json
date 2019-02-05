@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "dateformat": "^2.2.0",
-    "konph": "^1.0.3",
+    "konph": "^1.0.4",
     "lodash": "^4.17.4",
     "tslib": "^1.9.3"
   },
