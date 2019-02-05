@@ -1,6 +1,6 @@
 {
   "name": "chivy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "浏览器控制台打印工具.",
   "main": "lib/index.js",
   "jsnext:main": "src/index.ts",
