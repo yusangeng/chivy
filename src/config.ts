@@ -16,7 +16,7 @@ export type ChivyConfig = {
 
 export default konph({
   'chivy-level': {
-    def: 'WARN',
+    def: 2, // 等价于WARN
     fit: anything2Level
   },
 
