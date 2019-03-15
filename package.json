@@ -1,7 +1,7 @@
 {
   "name": "chivy",
-  "version": "1.0.1",
-  "description": "浏览器控制台打印工具.",
+  "version": "1.0.2",
+  "description": "Configurable console logger.",
   "main": "lib/index.js",
   "jsnext:main": "src/index.ts",
   "types": "lib",

@@ -1,20 +1,20 @@
-# chivy | 浏览器控制台打印工具
+# chivy
 
 [![TypeScript](https://img.shields.io/badge/lang-typescript-blue.svg)](https://www.tslang.cn/) [![Build Status](https://travis-ci.org/yusangeng/chivy.svg?branch=master)](https://travis-ci.org/yusangeng/chivy) [![Coverage Status](https://coveralls.io/repos/github/yusangeng/chivy/badge.svg?branch=master)](https://coveralls.io/github/yusangeng/chivy?branch=master) [![Npm Package Info](https://badge.fury.io/js/chivy.svg)](https://www.npmjs.com/package/chivy) [![Downloads](https://img.shields.io/npm/dw/chivy.svg?style=flat)](https://www.npmjs.com/package/chivy)
 
-## 综述
+## Abstract
 
-chivy是一个轻量级浏览器控制台打印工具, 实现了按模块和按级别过滤.
+Configurable console logger.
 
-## 安装
+## Install
 
 ``` bash
 npm install chivy --save
 ```
 
-## 使用
+## Usage
 
-### 配置
+### Configuration
 
 chivy 使用konph进行配置, konph用法见: https://github.com/yusangeng/konph
 
@@ -51,7 +51,7 @@ window.__Konph = {
 }
 ```
 
-### js调用
+### Code Example
 
 ``` js
 import Logger from 'chivy'
@@ -64,7 +64,7 @@ log.warn('Warn message!')
 log.error('Error message!')
 ```
 
-### 自定义
+### Customization
 
 Logger通过Context执行打印, Filter执行过滤. 通过依赖注入, 可以通过自定义Context和Filter的方式自定义chivy的行为.
 
