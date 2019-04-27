@@ -10,15 +10,18 @@ import Filter, { IFilter, Level } from './Filter'
 import Context, { IContext } from './Context'
 import config, { ChivyConfig } from './config'
 
-type ClassOf<T> = new (...args: any[]) => T
-
-type TC = ClassOf<IContext>
-type TF = ClassOf<IFilter>
-
+const { assign } = Object
 // 默认模块名(同时表示全局)
 const globalModuleName = 'global'
 
-const { assign } = Object
+type Constructor<T> = new (...args: any[]) => T
+
+type C = Constructor<IContext>
+type F = Constructor<IFilter>
+
+interface IInjector {
+  getClasses() : [ C, F ]
+}
 
 /**
  * 日志类.
@@ -27,11 +30,11 @@ const { assign } = Object
  * @class Logger
  */
 export default class Logger {
-  static injector = new class {
-    Context: TC = Context
-    Filter: TF = Filter
+  static readonly injector = new class DefaultInjector implements IInjector {
+    Context: C = Context
+    Filter: F = Filter
 
-    getClasses () : [ TC, TF ] {
+    getClasses () : [ C, F ] {
       const { Context, Filter } = this
 
       if (!Context || !Filter) {
@@ -42,9 +45,9 @@ export default class Logger {
     }
   }
 
-  moduleName: Path
-  ctx: IContext
-  filter: IFilter
+  private readonly moduleName: Path
+  private readonly ctx: IContext
+  private readonly filter: IFilter
 
   constructor (moduleName: string, conf?: KonphGlobal<ChivyConfig>) {
     this.moduleName = new Path(moduleName || globalModuleName)
@@ -76,7 +79,7 @@ export default class Logger {
     this.ctx.log.call(this.ctx, Level.TEST, this.moduleName.toString(), ...params)
   }
 
-  printByLevel (level: Level, ...params: any[]) : boolean {
+  private printByLevel (level: Level, ...params: any[]) : boolean {
     if (!this.filter.exec(level, this.moduleName)) {
       return false
     }
