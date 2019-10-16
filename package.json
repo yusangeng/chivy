@@ -1,6 +1,6 @@
 {
   "name": "chivy",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Configurable console logger.",
   "main": "lib/index.js",
   "jsnext:main": "src/index.ts",
