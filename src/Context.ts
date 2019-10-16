@@ -21,21 +21,21 @@ const { assign } = Object
 const notSupportColor = (env => !env.location || !!env.ActiveXObject)(g)
 
 type Styles = {
-  level: (level: string) => string,
-  module: (moduleName: string) => string,
-  time: (now: string) => string,
+  level: (level: string) => string
+  module: (moduleName: string) => string
+  time: (now: string) => string
   content: (content: string) => string
 }
 
 const colorTable: any = {
-  'DEBUG': '#3CABDB',
-  'INFO': '#167FFC',
-  'WARN': '#595BD4',
-  'ERROR': '#FD3259'
+  DEBUG: '#3CABDB',
+  INFO: '#167FFC',
+  WARN: '#595BD4',
+  ERROR: '#FD3259'
 }
 
 const colorfulStyles: Styles = {
-  level (level: string) : string {
+  level(level: string): string {
     let bg = colorTable[level]
 
     if (typeof bg !== 'string') {
@@ -45,27 +45,27 @@ const colorfulStyles: Styles = {
     return `color: #FFF; background:${bg};`
   },
 
-  module (moduleName: string) : string {
+  module(moduleName: string): string {
     return 'color: #6C6B47;'
   },
 
-  time (now: string) : string {
+  time(now: string): string {
     return 'color: #6C6B47;'
   },
 
-  content (content: string) : string {
+  content(content: string): string {
     return 'color: #0C0C0C;'
   }
 }
 
 const levelTextTable: any = {
-  'DEBUG': 'DBG',
-  'INFO': 'INF',
-  'WARN': 'WRN',
-  'ERROR': 'ERR'
+  DEBUG: 'DBG',
+  INFO: 'INF',
+  WARN: 'WRN',
+  ERROR: 'ERR'
 }
 
-function level2Text (levelStr: string) : string {
+function level2Text(levelStr: string): string {
   let text = levelTextTable[levelStr]
 
   if (typeof text !== 'string') {
@@ -77,7 +77,7 @@ function level2Text (levelStr: string) : string {
 
 type FLog = (message?: any, ...optionalParams: any[]) => void
 
-function getLogFunctionByLevel (levelStr: string) : FLog {
+function getLogFunctionByLevel(levelStr: string): FLog {
   if (levelStr === 'DEBUG') {
     return console.debug.bind(console)
   } else if (levelStr === 'INFO') {
@@ -108,7 +108,7 @@ export interface IContext {
    * @memberof Context
    * @instance
    */
-  log (level: Level, moduleName: string, ...params: any[]) : void
+  log(level: Level, moduleName: string, ...params: any[]): void
 }
 
 export default class Context implements IContext {
@@ -118,11 +118,11 @@ export default class Context implements IContext {
   readonly noLevel: boolean
   readonly cstyles_: Styles
 
-  constructor (conf?: KonphGlobal<ChivyConfig>) {
+  constructor(conf?: KonphGlobal<ChivyConfig>) {
     const myConf: ChivyConfig = assign({}, config, conf)
 
     const flags = myConf['chivy-context-flags']
-     
+
     this.noColor = notSupportColor || !flags.find(el => el === 'color')
     this.noTime = !flags.find(el => el === 'time')
     this.noModule = !flags.find(el => el === 'module')
@@ -131,7 +131,7 @@ export default class Context implements IContext {
     this.cstyles_ = colorfulStyles
   }
 
-  log (level: Level, moduleName: string, ...params: any[]) : void {
+  log(level: Level, moduleName: string, ...params: any[]): void {
     if (!this.noColor) {
       // 彩色打印
       this.colorfully(level, moduleName, ...params)
@@ -140,12 +140,12 @@ export default class Context implements IContext {
     }
   }
 
-  colorfully (level: Level, moduleName: string, ...params: any[]) : void {
-    const levelStr = anything2LevelString(level) || ('' + level)
+  colorfully(level: Level, moduleName: string, ...params: any[]): void {
+    const levelStr = anything2LevelString(level) || '' + level
     const paddingLevelStr = level2Text(levelStr)
 
     const now = dateFormat(new Date(), 'HH:mm:ss:l')
-    const [ p0 ] = params
+    const [p0] = params
 
     const prefix = []
     const styleParams = []
@@ -165,7 +165,9 @@ export default class Context implements IContext {
       styleParams.push(this.cstyles_.time(now))
     }
 
-    let log = console.log.bind(console)
+    const log = (...args: any[]) => {
+      console.log(...args)
+    }
 
     if (params.length !== 1) {
       log(`${prefix.join(' ')} ----`, ...styleParams)
@@ -195,8 +197,8 @@ export default class Context implements IContext {
     log(...params)
   }
 
-  monochromatically (level: Level, moduleName: string, ...params: any[]) : void {
-    const levelStr = anything2LevelString(level) || ('' + level)
+  monochromatically(level: Level, moduleName: string, ...params: any[]): void {
+    const levelStr = anything2LevelString(level) || '' + level
     const paddingLevelStr = level2Text(levelStr)
 
     const now = dateFormat(new Date(), 'HH:mm:ss:l')
