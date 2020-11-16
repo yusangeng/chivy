@@ -4,9 +4,6 @@
  * @author Y3G
  */
 
-import isString from 'lodash/isString'
-import isNumber from 'lodash/isNumber'
-
 /**
  * 字符串/数字转为日志级别数字.
  *
@@ -18,28 +15,30 @@ import isNumber from 'lodash/isNumber'
  *
  * @private
  */
-export function anything2Level (value: any) : number {
-  if (isNumber(value)) {
-    return Math.floor(value)
+export function anything2Level(value: any): number {
+  if (typeof value === "number") {
+    return Math.floor(value);
   }
 
-  if (isString(value)) {
-    let parsedValue = parseInt(value)
+  if (typeof value === "string") {
+    let parsedValue = parseInt(value);
 
     if (!isNaN(parsedValue)) {
-      return parsedValue
+      return parsedValue;
     }
 
-    let level = ['DEBUG', 'INFO', 'WARN', 'ERROR', 'MUTE'].indexOf(value.toUpperCase())
+    let level = ["DEBUG", "INFO", "WARN", "ERROR", "MUTE"].indexOf(
+      value.toUpperCase()
+    );
 
     if (level < 0) {
-      level = 0
+      level = 0;
     }
 
-    return level
+    return level;
   }
 
-  return 0
+  return 0;
 }
 
 /**
@@ -50,7 +49,9 @@ export function anything2Level (value: any) : number {
  *
  * @private
  */
-export function anything2LevelString (level: any) : string {
-  const nLevel = anything2Level(level)
-  return ['DEBUG', 'INFO', 'WARN', 'ERROR', 'MUTE'][nLevel] || `LEVEL(${level})`
+export function anything2LevelString(level: any): string {
+  const nLevel = anything2Level(level);
+  return (
+    ["DEBUG", "INFO", "WARN", "ERROR", "MUTE"][nLevel] || `LEVEL(${level})`
+  );
 }

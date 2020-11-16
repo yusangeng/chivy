@@ -4,10 +4,10 @@
  * @author Y3G
  */
 
-import { KonphGlobal } from "konph/lib/types";
+import { KonphGlobal } from "konph/src/types";
 import Path from "./Path";
 import Filter, { IFilter, Level } from "./Filter";
-import Context, { IContext } from "./Context";
+import Driver, { IDriver } from "./Driver";
 import config, { ChivyConfig } from "./config";
 
 const { assign } = Object;
@@ -16,7 +16,7 @@ const globalModuleName = "global";
 
 type Constructor<T> = new (...args: any[]) => T;
 
-type C = Constructor<IContext>;
+type C = Constructor<IDriver>;
 type F = Constructor<IFilter>;
 
 interface IInjector {
@@ -31,7 +31,7 @@ interface IInjector {
  */
 export default class Logger {
   static readonly injector = new (class DefaultInjector implements IInjector {
-    Context: C = Context;
+    Context: C = Driver;
     Filter: F = Filter;
 
     getClasses(): [C, F] {
@@ -46,7 +46,7 @@ export default class Logger {
   })();
 
   private readonly moduleName: Path;
-  private readonly ctx: IContext;
+  private readonly ctx: IDriver;
   private readonly filter: IFilter;
 
   constructor(moduleName: string, conf?: KonphGlobal<ChivyConfig>) {

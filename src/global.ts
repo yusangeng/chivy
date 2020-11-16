@@ -1,19 +1,19 @@
 /**
  * 全局对象.
- * 
+ *
  * @author Y3G
  */
 
-let g: any
+let g: any;
 
 if (typeof window !== "undefined") {
-  g = window
+  g = window;
 } else if (typeof global !== "undefined") {
-  g = global
+  g = global;
 } else if (typeof self !== "undefined") {
-  g = self
+  g = self;
 } else {
-  g = {}
+  g = {};
 }
 
-export default g
+export default g;

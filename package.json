@@ -1,6 +1,6 @@
 {
   "name": "chivy",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Configurable console logger.",
   "main": "lib/index.js",
   "jsnext:main": "src/index.ts",
@@ -10,7 +10,7 @@
     "test": "nyc mocha --require ts-node/register test/*.spec.ts",
     "coverage": "nyc report --reporter=lcov",
     "es5": "rm -rf ./lib && tsc -p tsconfig.json",
-    "prepublish": "npm run test && npm run es5",
+    "prepublishOnly": "npm run test && npm run es5",
     "ci": "npm run test && npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "dateformat": "^2.2.0",
-    "konph": "^1.0.4",
+    "konph": "^2.1.0",
     "lodash": "^4.17.4",
     "tslib": "^1.9.3"
   },

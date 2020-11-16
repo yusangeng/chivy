@@ -4,10 +4,10 @@
  * @author Y3G
  */
 
-import isString from 'lodash/isString'
+const wildcard = "*";
+const doubleWildcard = "**";
 
-const wildcard = '*'
-const doubleWildcard = '**'
+const isString = (v: any) => typeof v === "string";
 
 /**
  * 路径封装类.
@@ -23,8 +23,8 @@ const doubleWildcard = '**'
  * @class Path
  */
 export default class Path {
-  sections_: Array<string>
-  str: string = ''
+  sections_: Array<string>;
+  str: string = "";
 
   /**
    * 路径分段列表
@@ -33,8 +33,8 @@ export default class Path {
    *
    * @memberof Path
    */
-  get sections () {
-    return this.sections_.slice()
+  get sections() {
+    return this.sections_.slice();
   }
 
   /**
@@ -45,13 +45,16 @@ export default class Path {
    * @memberof Path
    * @private
    */
-  constructor (str: string) {
-    const pathStr = this.str = (str || '').toString()
+  constructor(str: string) {
+    const pathStr = (this.str = (str || "").toString());
 
-    this.sections_ = pathStr.split(/\/+/).map(el => el.trim()).filter(el => el.length)
+    this.sections_ = pathStr
+      .split(/\/+/)
+      .map(el => el.trim())
+      .filter(el => el.length);
 
     if (!this.sections_.length) {
-      console.warn(`不建议使用空字符串("${pathStr}")构造Path实例.`)
+      console.warn(`不建议使用空字符串("${pathStr}")构造Path实例.`);
     }
   }
 
@@ -63,8 +66,8 @@ export default class Path {
    * @memberof Path
    * @instance
    */
-  toString () : string {
-    return this.str
+  toString(): string {
+    return this.str;
   }
 
   /**
@@ -76,8 +79,8 @@ export default class Path {
    * @memberof Path
    * @instance
    */
-  equal (other: string | Path) : boolean {
-    return this.toString() === other.toString()
+  equal(other: string | Path): boolean {
+    return this.toString() === other.toString();
   }
 
   /**
@@ -91,14 +94,14 @@ export default class Path {
    * @memberof Path
    * @instance
    */
-  match (other: string | Path) : boolean {
-    const otherPath = isString(other) ? new Path(other) : other
+  match(other: string | Path): boolean {
+    const otherPath = isString(other) ? new Path(other as string) : other;
 
     if (other.toString().indexOf(wildcard) !== -1) {
-      throw new Error('被匹配的路径不可包含通配符(*或**).')
+      throw new Error("被匹配的路径不可包含通配符(*或**).");
     }
 
-    return sectionListMatch(this.sections, otherPath.sections)
+    return sectionListMatch(this.sections, (otherPath as Path).sections);
   }
 }
 
@@ -115,41 +118,40 @@ enum SectionMatchResult {
  * @param {Array<string>} right
  * @returns {boolean} 匹配返回true, 否则返回false
  */
-function sectionListMatch (left: Array<string>, right: Array<string>) : boolean {
+function sectionListMatch(left: Array<string>, right: Array<string>): boolean {
   while (left.length && right.length) {
-    const currentLeft = left.shift() as string
-    const nextLeft = left[0] // 如果数组里没元素则为undefined, sectionMatch会认为没有nextLeft可用
-    const currentRight = right.shift() as string
+    const currentLeft = left.shift() as string;
+    const nextLeft = left[0]; // 如果数组里没元素则为undefined, sectionMatch会认为没有nextLeft可用
+    const currentRight = right.shift() as string;
 
-    const sectionResult = sectionMatch(currentLeft, nextLeft, currentRight)
+    const sectionResult = sectionMatch(currentLeft, nextLeft, currentRight);
 
     if (sectionResult === SectionMatchResult.NotMatch) {
-      return false
+      return false;
     } else if (sectionResult === SectionMatchResult.Match) {
       if (currentLeft === doubleWildcard) {
         // 把通配符放回去
-        left.unshift(currentLeft)
+        left.unshift(currentLeft);
       }
     } else if (sectionResult === SectionMatchResult.NextMatch) {
       if (currentLeft === doubleWildcard) {
         // 此时需要要把下一个元素取出来, 下次匹配的时候直接从下下个开始
-        left.shift()
+        left.shift();
       }
     }
   }
 
   if (right.length) {
-    return false
+    return false;
   }
 
   if (left.length && left.filter(el => el !== doubleWildcard).length) {
     // 如果left中剩下的不止有多段通配符, 则说明匹配失败
-    return false
+    return false;
   }
 
-  return true
+  return true;
 }
-
 
 /**
  * 单个路径分段匹配算法
@@ -159,25 +161,29 @@ function sectionListMatch (left: Array<string>, right: Array<string>) : boolean 
  * @param {string} right
  * @returns {SectionMatchResult} left匹配right返回Match, nextLeft匹配right返回NextMatch, 不匹配返回NotMatch
  */
-function sectionMatch (left: string, nextLeft: string, right: string) : SectionMatchResult {
+function sectionMatch(
+  left: string,
+  nextLeft: string,
+  right: string
+): SectionMatchResult {
   if (left === wildcard) {
     // 通配符
-    return SectionMatchResult.Match
+    return SectionMatchResult.Match;
   }
 
   if (left === doubleWildcard) {
     // 多分段通配符
-    if (sectionMatch(nextLeft, '', right) === SectionMatchResult.Match) {
+    if (sectionMatch(nextLeft, "", right) === SectionMatchResult.Match) {
       // **/x 或 **/* 或 **/**
-      return SectionMatchResult.NextMatch
+      return SectionMatchResult.NextMatch;
     }
 
-    return SectionMatchResult.Match
+    return SectionMatchResult.Match;
   }
 
   if (left === right) {
-    return SectionMatchResult.Match
+    return SectionMatchResult.Match;
   }
 
-  return SectionMatchResult.NotMatch
+  return SectionMatchResult.NotMatch;
 }

@@ -1,8 +1,7 @@
+import Logger from "./Logger";
+import { IDriver } from "./Driver";
+import { IFilter } from "./Filter";
+import Path from "./Path";
 
-import Logger from './Logger'
-import { IContext } from './Context'
-import { IFilter } from './Filter'
-import Path from './Path'
-
-export { IContext, IFilter, Logger, Path }
-export default Logger
+export { IDriver, IFilter, Logger, Path };
+export default Logger;
