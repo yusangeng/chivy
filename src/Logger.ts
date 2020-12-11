@@ -31,17 +31,17 @@ interface IInjector {
  */
 export default class Logger {
   static readonly injector = new (class DefaultInjector implements IInjector {
-    Context: C = Driver;
+    Driver: C = Driver;
     Filter: F = Filter;
 
     getClasses(): [C, F] {
-      const { Context, Filter } = this;
+      const { Driver, Filter } = this;
 
-      if (!Context || !Filter) {
-        throw new Error(`Class Context and Filter should be injected.`);
+      if (!Driver || !Filter) {
+        throw new Error(`Class Driver and Class Filter should be injected.`);
       }
 
-      return [Context, Filter];
+      return [Driver, Filter];
     }
   })();
 
@@ -52,10 +52,10 @@ export default class Logger {
   constructor(moduleName: string, conf?: KonphGlobal<ChivyConfig>) {
     this.moduleName = new Path(moduleName || globalModuleName);
 
-    const [Context, Filter] = Logger.injector.getClasses();
+    const [Driver, Filter] = Logger.injector.getClasses();
     const cf = assign({}, config, conf);
 
-    this.ctx = new Context(cf);
+    this.ctx = new Driver(cf);
     this.filter = new Filter(cf);
 
     // 上层应用可能会直接使用成员方法

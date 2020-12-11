@@ -4,7 +4,7 @@
  * @author Y3G
  *
  * @fileoverview
- * Logger生成日志, Context打印日志.
+ * Logger生成日志, Driver打印日志.
  */
 
 import dateFormat from "dateformat";
@@ -118,7 +118,7 @@ export default class Driver implements IDriver {
   constructor(conf?: KonphGlobal<ChivyConfig>) {
     const myConf: ChivyConfig = assign({}, config, conf);
 
-    const flags = myConf["chivy-context-flags"];
+    const flags = myConf["chivy-driver-flags"];
 
     this.noColor = notSupportColor || !flags.find(el => el === "color");
     this.noTime = !flags.find(el => el === "time");

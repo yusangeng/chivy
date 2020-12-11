@@ -10,7 +10,7 @@ import { anything2Level } from "./levelHelper";
 export type ChivyConfig = {
   "chivy-level": number;
   "chivy-modules": Array<string>;
-  "chivy-context-flags": Array<string>;
+  "chivy-driver-flags": Array<string>;
 };
 
 export default konph({
@@ -24,7 +24,7 @@ export default konph({
     fit: konph.helper.fit.strings
   },
 
-  "chivy-context-flags": {
+  "chivy-driver-flags": {
     def: ["color", "level", "module"], // 'color', 'level', 'module', 'time'
     fit: konph.helper.fit.strings
   }
