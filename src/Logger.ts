@@ -1,10 +1,10 @@
 /**
  * 日志类.
  *
- * @author Y3G
+ * @author  yusangeng@outlook.com
  */
 
-import { KonphGlobal } from "konph/src/types";
+import { KonphGlobal } from "konph/lib/types";
 import Path from "./Path";
 import Filter, { IFilter, Level } from "./Filter";
 import Driver, { IDriver } from "./Driver";
@@ -38,7 +38,9 @@ export default class Logger {
       const { Driver, Filter } = this;
 
       if (!Driver || !Filter) {
-        throw new Error(`Class Driver and Class Filter should be injected.`);
+        throw new TypeError(
+          `Either class Driver or class Filter should be injected.`
+        );
       }
 
       return [Driver, Filter];
@@ -46,7 +48,7 @@ export default class Logger {
   })();
 
   private readonly moduleName: Path;
-  private readonly ctx: IDriver;
+  private readonly driver: IDriver;
   private readonly filter: IFilter;
 
   constructor(moduleName: string, conf?: KonphGlobal<ChivyConfig>) {
@@ -55,48 +57,46 @@ export default class Logger {
     const [Driver, Filter] = Logger.injector.getClasses();
     const cf = assign({}, config, conf);
 
-    this.ctx = new Driver(cf);
+    this.driver = new Driver(cf);
     this.filter = new Filter(cf);
-
-    // 上层应用可能会直接使用成员方法
-    this.debug = this.debug.bind(this);
-    this.info = this.info.bind(this);
-    this.warn = this.warn.bind(this);
-    this.error = this.error.bind(this);
-    this.print = this.print.bind(this);
   }
 
-  debug(...params: any[]): boolean {
+  debug = (...params: any[]): boolean => {
     return this.printByLevel(Level.DEBUG, ...params);
-  }
+  };
 
-  info(...params: any[]): boolean {
+  info = (...params: any[]): boolean => {
     return this.printByLevel(Level.INFO, ...params);
-  }
+  };
 
-  warn(...params: any[]): boolean {
+  warn = (...params: any[]): boolean => {
     return this.printByLevel(Level.WARN, ...params);
-  }
+  };
 
-  error(...params: any[]): boolean {
+  error = (...params: any[]): boolean => {
     return this.printByLevel(Level.ERROR, ...params);
-  }
+  };
 
-  print(...params: any[]): void {
-    this.ctx.log.call(
-      this.ctx,
+  print = (...params: any[]): void => {
+    this.driver.log.call(
+      this.driver,
       Level.TEST,
       this.moduleName.toString(),
       ...params
     );
-  }
+  };
 
   private printByLevel(level: Level, ...params: any[]): boolean {
     if (!this.filter.exec(level, this.moduleName)) {
       return false;
     }
 
-    this.ctx.log.call(this.ctx, level, this.moduleName.toString(), ...params);
+    this.driver.log.call(
+      this.driver,
+      level,
+      this.moduleName.toString(),
+      ...params
+    );
     return true;
   }
 }
