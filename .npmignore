@@ -2,7 +2,11 @@ node_modules
 coverage
 .nyc_output
 .vscode
-package-lock.json
 yarn.lock
+package-lock.json
+.gitignore
+.travis.yml
+tsconfig.json
+.github
 src
 test

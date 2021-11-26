@@ -8,7 +8,7 @@
  */
 
 import dateFormat from "dateformat";
-import { KonphGlobal } from "konph/lib/types";
+import { KonphGlobal } from "konph/types/types";
 import g from "./global";
 import config, { ChivyConfig } from "./config";
 import { Level } from "./Filter";
@@ -74,7 +74,7 @@ function level2Text(levelStr: string): string {
 
 type FLog = (message?: any, ...optionalParams: any[]) => void;
 
-function getLogFunctionByLevel(levelStr: string): FLog {
+function getConsoleLogFunctionByLevel(levelStr: string): FLog {
   if (levelStr === "DEBUG") {
     return console.debug.bind(console);
   } else if (levelStr === "INFO") {
@@ -218,7 +218,7 @@ export default class Driver implements IDriver {
       prefix.push(`[${now}]`);
     }
 
-    const log = getLogFunctionByLevel(levelStr);
+    const log = getConsoleLogFunctionByLevel(levelStr);
 
     if (
       params.length === 1 &&

@@ -1,17 +1,19 @@
 {
   "name": "chivy",
-  "version": "2.0.1",
+  "version": "3.0.0-beta1",
   "description": "可配置的前端日志打印工具.",
-  "main": "lib/index.js",
-  "jsnext:main": "src/index.ts",
-  "types": "lib",
-  "type-check": "tsc",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
+    "lint": "eslint --fix ./src && prettier --write ./src",
     "test": "nyc mocha --require ts-node/register test/*.spec.ts",
     "coverage": "nyc report --reporter=lcov",
-    "es5": "rm -rf ./lib && tsc -p tsconfig.json",
-    "prepublishOnly": "npm run test && npm run es5",
-    "ci": "npm run test && npm run coverage"
+    "esm": "rm -rf ./esm && rm -rf types && tsc -p tsconfig.esm.json",
+    "cjs": "rm -rf ./cjs && tsc -p tsconfig.cjs.json",
+    "build": "npm run esm && npm run cjs",
+    "prepublishOnly": "npm run test && npm run build",
+    "ci": "npm run lint && npm run build && npm run test && npm run coverage"
   },
   "repository": {
     "type": "git",
@@ -37,13 +39,12 @@
     "coveralls": "^3.1.1",
     "mocha": "^9.1.3",
     "nyc": "^15.1.0",
-    "source-map-support": "^0.5.21",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
   },
   "dependencies": {
     "dateformat": "^5.0.2",
-    "konph": "^3.0.1",
+    "konph": "4.0.0-beta2",
     "lodash": "^4.17.21",
     "tslib": "^2.3.1"
   },
