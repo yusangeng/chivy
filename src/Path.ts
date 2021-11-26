@@ -1,7 +1,7 @@
 /**
  * 路径封装类.
  *
- * @author Y3G
+ * @author  yusangeng@outlook.com
  */
 
 const wildcard = "*";

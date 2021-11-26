@@ -1,7 +1,7 @@
 /**
  * 全局对象.
  *
- * @author Y3G
+ * @author  yusangeng@outlook.com
  */
 
 let g: any;

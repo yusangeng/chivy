@@ -1,14 +1,14 @@
 /**
  * 日志打印类.
  *
- * @author Y3G
+ * @author  yusangeng@outlook.com
  *
  * @fileoverview
  * Logger生成日志, Driver打印日志.
  */
 
 import dateFormat from "dateformat";
-import { KonphGlobal } from "konph/src/types";
+import { KonphGlobal } from "konph/lib/types";
 import g from "./global";
 import config, { ChivyConfig } from "./config";
 import { Level } from "./Filter";

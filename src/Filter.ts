@@ -1,10 +1,10 @@
 /**
  * 日志过滤器.
  *
- * @author Y3G
+ * @author  yusangeng@outlook.com
  */
 
-import { KonphGlobal } from "konph/src/types";
+import { KonphGlobal } from "konph/lib/types";
 import config, { ChivyConfig } from "./config";
 import { anything2Level } from "./levelHelper";
 import Path from "./Path";

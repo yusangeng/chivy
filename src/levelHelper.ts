@@ -1,7 +1,7 @@
 /**
  * 日志级别相关函数.
  *
- * @author Y3G
+ * @author  yusangeng@outlook.com
  */
 
 /**

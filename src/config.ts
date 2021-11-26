@@ -1,7 +1,7 @@
 /**
  * 日志配置.
  *
- * @author Y3G
+ * @author  yusangeng@outlook.com
  */
 
 import konph from "konph";
