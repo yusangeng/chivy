@@ -1,22 +1,22 @@
 # chivy
 
-[![TypeScript](https://img.shields.io/badge/lang-typescript-blue.svg)](https://www.tslang.cn/) [![Build Status](https://travis-ci.org/yusangeng/chivy.svg?branch=master)](https://travis-ci.org/yusangeng/chivy) [![Coverage Status](https://coveralls.io/repos/github/yusangeng/chivy/badge.svg?branch=master)](https://coveralls.io/github/yusangeng/chivy?branch=master) [![Npm Package Info](https://badge.fury.io/js/chivy.svg)](https://www.npmjs.com/package/chivy) [![Downloads](https://img.shields.io/npm/dw/chivy.svg?style=flat)](https://www.npmjs.com/package/chivy)
+[![TypeScript](https://img.shields.io/badge/lang-typescript-blue.svg)](https://www.tslang.cn/) [![Build Status](https://github.com/yusangeng/chivy/workflows/test/badge.svg)](https://github.com/yusangeng/chivy/actions?query=workflow%3Atest) [![Coverage Status](https://coveralls.io/repos/github/yusangeng/chivy/badge.svg?branch=master)](https://coveralls.io/github/yusangeng/chivy) [![Npm Package Info](https://badge.fury.io/js/chivy.svg)](https://www.npmjs.com/package/chivy) [![Downloads](https://img.shields.io/npm/dw/chivy.svg?style=flat)](https://www.npmjs.com/package/chivy)
 
-## Abstract
+## 综述
 
-Configurable console logger.
+chivy 是一个可配置的前端日志打印工具, 让你可以按照级别和模块管理你的 console.log, 或者通过自定义 driver 完成将控制台打印转发到后台等高级操作.
 
-## Install
+## 安装
 
 ```bash
-npm install chivy --save
+npm install chivy
 ```
 
-## Usage
+## 使用
 
-### Configuration
+### 配置
 
-chivy 使用 konph 进行配置, konph 用法见: https://github.com/yusangeng/konph
+chivy 使用 konph 进行配置, konph 用法见: https://www.npmjs.com/package/konph
 
 配置项:
 
@@ -51,7 +51,7 @@ window.__Konph = {
 };
 ```
 
-### Code Example
+### 代码示例
 
 ```js
 import Logger from "chivy";
@@ -64,7 +64,7 @@ log.warn("Warn message!");
 log.error("Error message!");
 ```
 
-### Customization
+### 自定义
 
 Logger 通过 Driver 执行打印, Filter 执行过滤. 通过依赖注入, 可以通过自定义 Driver 和 Filter 的方式自定义 chivy 的行为.
 
