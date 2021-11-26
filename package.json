@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "dateformat": "^5.0.2",
-    "konph": "4.0.0-beta2",
+    "konph": "^4.0.0",
     "lodash": "^4.17.21",
     "tslib": "^2.3.1"
   },
