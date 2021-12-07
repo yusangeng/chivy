@@ -24,7 +24,7 @@ const isString = (v: any) => typeof v === "string";
  */
 export default class Path {
   sections_: Array<string>;
-  str: string = "";
+  str = "";
 
   /**
    * 路径分段列表

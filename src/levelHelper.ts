@@ -21,7 +21,7 @@ export function anything2Level(value: any): number {
   }
 
   if (typeof value === "string") {
-    let parsedValue = parseInt(value);
+    const parsedValue = parseInt(value);
 
     if (!isNaN(parsedValue)) {
       return parsedValue;
