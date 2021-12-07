@@ -4,6 +4,8 @@
  * @author  yusangeng@outlook.com
  */
 
+/* istanbul ignore file */
+
 let g: any;
 
 if (typeof window !== "undefined") {

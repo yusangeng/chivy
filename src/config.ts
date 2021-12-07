@@ -4,6 +4,8 @@
  * @author  yusangeng@outlook.com
  */
 
+/* istanbul ignore file */
+
 import konph from "konph";
 import { anything2Level } from "./levelHelper";
 
