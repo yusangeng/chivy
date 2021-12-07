@@ -7,7 +7,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "lint": "eslint --fix ./src && prettier --write ./src",
-    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' nyc mocha --require ts-node/register test/*.spec.ts",
+    "test": "nyc mocha --require ts-node/register test/*.spec.ts",
     "coverage": "nyc report --reporter=lcov",
     "esm": "rm -rf ./esm && rm -rf types && tsc -p tsconfig.esm.json",
     "cjs": "rm -rf ./cjs && tsc -p tsconfig.cjs.json",
