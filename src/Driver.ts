@@ -8,7 +8,7 @@
  */
 
 import dateFormat from "dateformat";
-import { KonphGlobal } from "konph/types/types";
+import { KonphGlobal } from "konph";
 import g from "./global";
 import config, { ChivyConfig } from "./config";
 import { Level } from "./Filter";
@@ -42,15 +42,15 @@ const colorfulStyles: Styles = {
     return `color: #FFF; background:${bg};`;
   },
 
-  module(moduleName: string): string {
+  module(/*moduleName: string*/): string {
     return "color: #6C6B47;";
   },
 
-  time(now: string): string {
+  time(/*now: string*/): string {
     return "color: #6C6B47;";
   },
 
-  content(content: string): string {
+  content(/*content: string*/): string {
     return "color: #0C0C0C;";
   }
 };

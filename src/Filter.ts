@@ -4,7 +4,7 @@
  * @author  yusangeng@outlook.com
  */
 
-import { KonphGlobal } from "konph/types/types";
+import { KonphGlobal } from "konph";
 import config, { ChivyConfig } from "./config";
 import { anything2Level } from "./levelHelper";
 import Path from "./Path";

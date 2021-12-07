@@ -4,7 +4,7 @@
  * @author  yusangeng@outlook.com
  */
 
-import { KonphGlobal } from "konph/types/types";
+import { KonphGlobal } from "konph";
 import Path from "./Path";
 import Filter, { IFilter, Level } from "./Filter";
 import Driver, { IDriver } from "./Driver";
