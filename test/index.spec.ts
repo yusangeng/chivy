@@ -1,6 +1,6 @@
 /* global describe it */
 import chai from 'chai'
-import Logger from '../src'
+import Logger from '../src/Logger'
 
 chai.should()
 
