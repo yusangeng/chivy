@@ -1,13 +1,13 @@
 {
   "name": "chivy",
-  "version": "3.0.0-beta3",
+  "version": "3.0.0",
   "description": "可配置的前端日志打印工具.",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "types/index.d.ts",
   "scripts": {
     "lint": "eslint --fix ./src && prettier --write ./src",
-    "test": "nyc mocha --require ts-node/register test/Path.spec.ts",
+    "test": "nyc mocha --require ts-node/register test/*.spec.ts",
     "coverage": "nyc report --reporter=lcov",
     "esm": "rm -rf ./esm && rm -rf types && tsc -p tsconfig.esm.json",
     "cjs": "rm -rf ./cjs && tsc -p tsconfig.cjs.json",
