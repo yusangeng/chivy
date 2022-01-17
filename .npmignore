@@ -5,6 +5,8 @@ coverage
 yarn.lock
 package-lock.json
 .gitignore
+.eslintrc.js
+.prettierrc
 .travis.yml
 tsconfig.json
 .github
