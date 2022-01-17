@@ -5,9 +5,16 @@
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "types/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js"
+    }
+  },
   "scripts": {
     "lint": "eslint --fix ./src && prettier --write ./src",
-    "test": "nyc mocha --require ts-node/register test/*.spec.ts",
+    "test": "cross-env TS_NODE_PROJECT='./tsconfig.test.json' nyc mocha",
     "coverage": "nyc report --reporter=lcov",
     "esm": "rm -rf ./esm && rm -rf types && tsc -p tsconfig.esm.json",
     "cjs": "rm -rf ./cjs && tsc -p tsconfig.cjs.json",
@@ -51,8 +58,8 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
-    "dateformat": "^4.0.0",
-    "konph": "^4.0.0",
+    "dateformat": "^5.0.0",
+    "konph": "^4.0.3",
     "lodash": "^4.17.21",
     "tslib": "^2.3.1"
   },

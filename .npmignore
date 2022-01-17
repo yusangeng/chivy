@@ -9,6 +9,9 @@ package-lock.json
 .prettierrc
 .travis.yml
 tsconfig.json
+tsconfig.cjs.json
+tsconfig.esm.json
+.mocharc.json
 .github
 src
 test
