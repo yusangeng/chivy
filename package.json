@@ -1,17 +1,11 @@
 {
   "name": "chivy",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "可配置的前端日志打印工具.",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "types/index.d.ts",
   "type": "module",
-  "exports": {
-    ".": {
-      "import": "./esm/index.js",
-      "require": "./cjs/index.js"
-    }
-  },
   "scripts": {
     "lint": "eslint --fix ./src && prettier --write ./src",
     "test": "cross-env TS_NODE_PROJECT='./tsconfig.test.json' nyc mocha",
