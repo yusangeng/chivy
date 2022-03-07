@@ -6,6 +6,9 @@
   "module": "esm/index.js",
   "types": "types/index.d.ts",
   "type": "module",
+  "exports": {
+    ".": "./esm/index.js"
+  },
   "scripts": {
     "lint": "eslint --fix ./src && prettier --write ./src",
     "test": "cross-env TS_NODE_PROJECT='./tsconfig.test.json' nyc mocha",
