@@ -6,7 +6,7 @@
 
 import { KonphGlobal } from "konph";
 import config, { ChivyConfig } from "./config";
-import { anything2Level } from "./levelHelper";
+import { anything2Level } from "./level-utils";
 import Path from "./Path";
 
 const { assign } = Object;

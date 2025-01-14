@@ -11,7 +11,7 @@ import dateFormat from "dateformat";
 import { KonphGlobal } from "konph";
 import config, { ChivyConfig } from "./config";
 import { Level } from "./Filter";
-import { anything2LevelString } from "./levelHelper";
+import { anything2LevelString } from "./level-utils";
 
 const { assign } = Object;
 const notSupportColor = (env => !env.location || !!(env as any).ActiveXObject)(globalThis);

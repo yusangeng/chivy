@@ -7,7 +7,7 @@
 /* istanbul ignore file */
 
 import konph from "konph";
-import { anything2Level } from "./levelHelper";
+import { anything2Level } from "./level-utils";
 
 export type ChivyConfig = {
   "chivy-level": number;
