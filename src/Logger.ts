@@ -16,11 +16,11 @@ const globalModuleName = "global";
 
 type Constructor<T> = new (...args: any[]) => T;
 
-type C = Constructor<IDriver>;
-type F = Constructor<IFilter>;
+type DriverCostructor = Constructor<IDriver>;
+type FilterContructor = Constructor<IFilter>;
 
 interface IInjector {
-  getClasses(): [C, F];
+  getClasses(): [DriverCostructor, FilterContructor];
 }
 
 /**
@@ -31,19 +31,19 @@ interface IInjector {
  */
 export default class Logger {
   static readonly injector = new (class DefaultInjector implements IInjector {
-    Driver: C = Driver;
-    Filter: F = Filter;
+    DriverClass: DriverCostructor = Driver;
+    FilterClass: FilterContructor = Filter;
 
-    getClasses(): [C, F] {
-      const { Driver, Filter } = this;
+    getClasses(): [DriverCostructor, FilterContructor] {
+      const { DriverClass, FilterClass } = this;
 
-      if (!Driver || !Filter) {
+      if (!DriverClass || !FilterClass) {
         throw new TypeError(
           `Either class Driver or class Filter should be injected.`
         );
       }
 
-      return [Driver, Filter];
+      return [DriverClass, FilterClass];
     }
   })();
 
@@ -54,11 +54,11 @@ export default class Logger {
   constructor(moduleName: string, conf?: KonphGlobal<ChivyConfig>) {
     this.moduleName = new Path(moduleName || globalModuleName);
 
-    const [Driver, Filter] = Logger.injector.getClasses();
+    const [DriverClass, FilterClass] = Logger.injector.getClasses();
     const cf = assign({}, config, conf);
 
-    this.driver = new Driver(cf);
-    this.filter = new Filter(cf);
+    this.driver = new DriverClass(cf);
+    this.filter = new FilterClass(cf);
   }
 
   debug = (...params: any[]): boolean => {
