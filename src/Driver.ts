@@ -9,13 +9,12 @@
 
 import dateFormat from "dateformat";
 import { KonphGlobal } from "konph";
-import g from "./global";
 import config, { ChivyConfig } from "./config";
 import { Level } from "./Filter";
 import { anything2LevelString } from "./levelHelper";
 
 const { assign } = Object;
-const notSupportColor = (env => !env.location || !!env.ActiveXObject)(g);
+const notSupportColor = (env => !env.location || !!(env as any).ActiveXObject)(globalThis);
 
 type Styles = {
   level: (level: string) => string;
@@ -100,12 +99,12 @@ export interface IDriver {
    *
    * @param {Level} level 日志级别
    * @param {string} moduleName 模块名
-   * @param {Array} params 其他参数
+   * @param {Array} data 其他参数
    *
    * @memberof IDriver
    * @instance
    */
-  log(level: Level, moduleName: string, ...params: any[]): void;
+  log(level: Level, moduleName: string, ...data: any[]): void;
 }
 
 export default class Driver implements IDriver {
