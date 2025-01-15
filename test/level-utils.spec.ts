@@ -1,6 +1,6 @@
 /* global describe it */
 import chai from "chai";
-import { anything2Level, anything2LevelString } from "../src/levelHelper";
+import { anything2Level, anything2LevelString } from "../src/level-utils";
 
 chai.should();
 
