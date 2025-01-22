@@ -27,15 +27,15 @@ export function anything2Level(value: any): number {
       return parsedValue;
     }
 
-    let level = ["DEBUG", "INFO", "WARN", "ERROR", "MUTE"].indexOf(
+    let levelNumber = ["DEBUG", "INFO", "WARN", "ERROR", "MUTE", "PRINT"].indexOf(
       value.toUpperCase()
     );
 
-    if (level < 0) {
-      level = 0;
+    if (levelNumber < 0) {
+      levelNumber = 0;
     }
 
-    return level;
+    return levelNumber;
   }
 
   return 0;
@@ -52,6 +52,6 @@ export function anything2Level(value: any): number {
 export function anything2LevelString(level: any): string {
   const nLevel = anything2Level(level);
   return (
-    ["DEBUG", "INFO", "WARN", "ERROR", "MUTE"][nLevel] || `LEVEL(${level})`
+    ["DEBUG", "INFO", "WARN", "ERROR", "MUTE", "PRINT"][nLevel] || `LEVEL(${level})`
   );
 }

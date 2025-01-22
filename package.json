@@ -1,6 +1,6 @@
 {
   "name": "chivy",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "可配置的前端日志打印工具.",
   "main": "cjs/index.js",
   "module": "esm/index.js",

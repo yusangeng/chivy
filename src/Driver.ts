@@ -27,7 +27,8 @@ const colorTable: any = {
   DEBUG: "#3CABDB",
   INFO: "#167FFC",
   WARN: "#595BD4",
-  ERROR: "#FD3259"
+  ERROR: "#FD3259",
+  PRINT: "#000000"
 };
 
 const colorfulStyles: Styles = {
@@ -58,14 +59,15 @@ const levelTextTable: any = {
   DEBUG: "DBG",
   INFO: "INF",
   WARN: "WRN",
-  ERROR: "ERR"
+  ERROR: "ERR",
+  PRINT: "PRT"
 };
 
 function level2Text(levelStr: string): string {
   let text = levelTextTable[levelStr];
 
   if (typeof text !== "string") {
-    text = "#3CABDB";
+    text = "???";
   }
 
   return text;
@@ -82,6 +84,8 @@ function getConsoleLogFunctionByLevel(levelStr: string): FLog {
     return console.warn.bind(console);
   } else if (levelStr === "ERROR") {
     return console.error.bind(console);
+  } else if (levelStr === "PRINT") {
+    return console.log.bind(console);
   } else {
     return console.log.bind(console);
   }

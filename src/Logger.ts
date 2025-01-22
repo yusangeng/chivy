@@ -80,7 +80,7 @@ export default class Logger {
   print = (...params: any[]): void => {
     this.driver.log.call(
       this.driver,
-      Level.TEST,
+      Level.PRINT,
       this.moduleName.toString(),
       ...params
     );

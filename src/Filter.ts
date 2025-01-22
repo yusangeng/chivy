@@ -22,6 +22,7 @@ export enum Level {
   WARN = 2,
   ERROR = 3,
   MUTE = 4,
+  PRINT = 5,
   TEST = 9999
 }
 
