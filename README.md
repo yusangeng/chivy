@@ -1,3 +1,5 @@
+
+
 # chivy
 
 [![TypeScript](https://img.shields.io/badge/lang-typescript-blue.svg)](https://www.tslang.cn/) [![Build Status](https://github.com/yusangeng/chivy/workflows/test/badge.svg)](https://github.com/yusangeng/chivy/actions?query=workflow%3Atest) [![Coverage Status](https://coveralls.io/repos/github/yusangeng/chivy/badge.svg?branch=master)](https://coveralls.io/github/yusangeng/chivy) [![Npm Package Info](https://badge.fury.io/js/chivy.svg)](https://www.npmjs.com/package/chivy) [![Downloads](https://img.shields.io/npm/dw/chivy.svg?style=flat)](https://www.npmjs.com/package/chivy)
@@ -20,7 +22,7 @@ chivy 使用 konph 进行配置, konph 用法见: https://www.npmjs.com/package/
 
 配置项:
 
-- chivy-level: 当前网页 log 级别, 低于此级别的日志将不会打印. 可填写整数, 默认为 0. 也可填字符串, 字符串到整数换算规则如下(不区分大小写)：
+- chivy-level: 当前网页 log 级别, 低于此级别的日志将不会打印. 可填写整数, 默认为 2. 也可填字符串, 字符串到整数换算规则如下(不区分大小写)：
 
 > DEBUG: 0
 > INFO: 1
@@ -31,7 +33,7 @@ chivy 使用 konph 进行配置, konph 用法见: https://www.npmjs.com/package/
 - chivy-modules: 被打开的模块名. 可填一个数组, 或者用","隔开的字符串. 默认为['**']
 
 > chivy-modules 中的 module 名使用"/"分割, 每一段称为一个 section, 匹配时以 section 为单位从左向右匹配.
-> chivy-modules 中的 module 名支持单 section 通配符"\*"和多 section 通配符"\*\*", 通配符和其他字符不能混用, 一个 section 要么是通配符, 要么是其他字符.
+> chivy-modules 中的 module 名支持单 section 通威符"\*"和多 section 通威符"\*\*", 通配符和其他字符不能混用, 一个 section 要么是通威符, 要么是其他字符.
 
 - chivy-driver-flags: driver 打印配置. 类型为形如['color', 'level', 'module', 'time']的数组, 可以通过增删元素选择打印方式或字段：
   - color: 彩色打印.
